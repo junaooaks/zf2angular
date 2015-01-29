@@ -1,0 +1,16 @@
+<h3>Login</h3>
+<br/>
+
+<?php if($this->error): ?>
+<p>Usuario ou senha invalidos</p>
+<?php endif; ?>
+
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('user-auth'));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag();

@@ -1,0 +1,23 @@
+commit 6331c8cdf012f9d835e2b25b5bab8e632db81114
+Author: Fábio Paiva <paiva.fabiofelipe@gmail.com>
+Date:   Thu Jan 22 15:06:53 2015 -0200
+
+    Correção data-fixture
+
+diff --git a/module/User/config/module.config.php b/module/User/config/module.config.php
+index 209dacf..d9c2565 100644
+--- a/module/User/config/module.config.php
++++ b/module/User/config/module.config.php
+@@ -52,8 +52,9 @@ return array(
+                 ),
+             ),
+         ),
+-    ),
+-    'data-fixture' => array(
+-        'User_fixture' => __DIR__ . '/../src/User/Fixture',
++	'fixture' => array(
++	        'User_fixture' => __DIR__ . '/../src/User/Fixture',
++	    ),
++
+     ),
+ );

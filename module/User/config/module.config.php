@@ -5,7 +5,7 @@ namespace User;
 return array(
     'router' => array(
         'routes' => array(
-            'uesr-register' => array(
+            'user-register' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/register',
@@ -15,12 +15,91 @@ return array(
                         'action' => 'register',
                     )
                 )
+            ),
+            'user-activate' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/register/activate[/:key]',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Index',
+                        'action' => 'activate'
+                    )
+                )
+            ),
+            'user-auth' => array(
+              'type' => 'Literal',
+                'options' => array(
+                    'route'=>'/auth',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'User\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'user-logout' => array(
+              'type' => 'Literal',
+                'options' => array(
+                    'route'=>'/auth/logout',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'User\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'logout'
+                    )
+                )
+            ),
+            
+            'user-admin' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/admin',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'User\Controller',
+                        'controller' => 'Users',
+                        'action' => 'index'
+                    )
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/[:controller[/:action[/:id]]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '\d+'
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'users'
+                            )
+                        )
+                    ),
+                    'paginator' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/[:controller[/page/:page]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'page' => '\d+'
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'users'
+                            )
+                        )
+                    )
+                )
             )
         )
     ),
     'controllers' => array(
         'invokables' => array(
             'User\Controller\Index' => 'User\Controller\IndexController',
+            'User\Controller\Users' => 'User\Controller\UsersController',
+            'User\Controller\Auth' => 'User\Controller\AuthController',
         )
     ),
     'view_manager' => array(
@@ -31,7 +110,6 @@ return array(
         'exception_template' => 'error/index',
         'template_map' => array(
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/user/index/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ),

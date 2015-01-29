@@ -14,6 +14,7 @@ use Zend\Stdlib\Hydrator;
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="email", columns={"email"})})
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="User\Entity\UserRepository")
  */
 class Users
 {
@@ -189,6 +190,12 @@ class Users
 
     function setCreatedAt() {
         $this->createdAt = new \DateTime("now");
+        
+    }
+    
+    public function toArray() {
+        
+        return (new Hydrator\ClassMethods())->extract($this);
         
     }
 

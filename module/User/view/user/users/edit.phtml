@@ -1,0 +1,14 @@
+<h3>Edita Usuario</h3>
+<br />
+<?php
+$form = $this->form;
+
+$form->setAttribute('action',$this->url('user-admin/default',array('controller'=>'users','action'=>'edit')));
+
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag();
+
+?>
